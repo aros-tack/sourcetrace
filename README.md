@@ -25,6 +25,8 @@ Exit status is `0` when everything traces, `1` when there is a problem, `2` for 
 ## Install
 
 ```
+pip install https://github.com/aros-tack/sourcetrace/releases/download/v0.2.0/sourcetrace-0.2.0-py3-none-any.whl
+# or, always the latest source:
 pip install git+https://github.com/aros-tack/sourcetrace
 ```
 
