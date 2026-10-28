@@ -26,7 +26,7 @@ Exit status is `0` when everything traces, `1` when there is a problem, `2` for 
 pip install git+https://github.com/aros-tack/quotecheck
 ```
 
-Python 3.9+, standard library only. PDFs are read with `pdftotext` (poppler) if you have it; `.txt .md .csv .tsv .json .html .docx` need nothing extra.
+Python 3.11+ (tested on 3.11 and 3.13), standard library only. PDFs are read with `pdftotext` (poppler) if you have it; `.txt .md .csv .tsv .json .html .docx` need nothing extra.
 
 ## Use
 

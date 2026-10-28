@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Check that a report's quotations and numbers really come from its sources."
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 classifiers = ["License :: OSI Approved :: MIT License", "Programming Language :: Python :: 3"]
 
 [project.scripts]
