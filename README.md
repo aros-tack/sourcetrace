@@ -34,6 +34,7 @@ Python 3.11+ (tested on 3.11 and 3.13), standard library only. PDFs are read wit
 quotecheck REPORT -s SOURCE [-s SOURCE ...] [--min-chars 20] [--no-numbers] [--years] [--json]
 ```
 
+* Guide: [docs/guide.md](docs/guide.md) — a short practical routine for checking reports.
 * A quotation is text in “curly”, "straight" or «guillemet» quotes of at least 20 characters and 4 words (code blocks and inline code are ignored).
 * Matching ignores case, spacing, curly vs straight quotes, dash styles and line-break hyphenation — never the words themselves.
 * Years, ISO dates, URLs and list markers are not treated as figures unless you pass `--years`.

@@ -87,5 +87,21 @@ class Cli(unittest.TestCase):
         self.assertEqual(main([str(self.d / "missing.md"), "-s", str(self.d / "src.txt")]), 2)
 
 
+class Examples(unittest.TestCase):
+    """The shipped example is what docs/guide.md shows; if the tool's behaviour drifts this fails."""
+
+    def test_example_matches_the_guide(self):
+        root = Path(__file__).resolve().parents[1]
+        rep = (root / "examples" / "report.md").read_text()
+        src = {"policy.txt": (root / "examples" / "policy.txt").read_text()}
+        r = check_report(rep, src)
+        self.assertEqual([q.status for q in r.quotes], ["altered", "verbatim"])
+        self.assertEqual([(n.raw, n.traced) for n in r.numbers], [("R 4,250,000", True), ("R 1,200,500", True), ("R 3,049,500", False)])
+        self.assertEqual(r.problems, 2)
+        self.assertGreaterEqual(r.quotes[0].similarity, 0.9)
+        guide = (root / "docs" / "guide.md").read_text()
+        self.assertIn("1/2 quotations verbatim; 2/3 numbers traced; 2 problem(s).", guide)
+
+
 if __name__ == "__main__":
     unittest.main()

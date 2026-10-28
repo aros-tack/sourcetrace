@@ -158,27 +158,38 @@ def numbers_in(text: str, ignore_years: bool = True) -> list[tuple[str, int, Dec
     return out
 
 
+def _best_span(q_norm: str, seg: str, centre: int) -> tuple[str, float]:
+    """The word-aligned stretch of ``seg`` near ``centre`` that best matches the quotation."""
+    span = len(q_norm)
+    starts = [m.start() for m in re.finditer(r"(?<!\S)\S", seg) if abs(m.start() - centre) <= 40]
+    ends = [m.end() for m in re.finditer(r"\S+", seg)]
+    best, ratio = "", 0.0
+    for a in starts:
+        for e in ends:
+            if not (span - 12 <= e - a <= span + 12):
+                continue
+            r = difflib.SequenceMatcher(None, q_norm, seg[a:e], autojunk=False).ratio()
+            if r > ratio:
+                best, ratio = seg[a:e], r
+    return best, ratio
+
+
 def _closest(q_norm: str, src_norm: str) -> tuple[str, float]:
     words = sorted(set(re.findall(r"[a-z0-9']{5,}", q_norm)), key=len, reverse=True)[:3] or q_norm.split()[:1]
     best, ratio = "", 0.0
     span = len(q_norm)
     for w in words:
         start, hits = 0, 0
-        while hits < 60:
+        while hits < 40:
             i = src_norm.find(w, start)
             if i < 0:
                 break
-            lo, hi = max(0, i - span), min(len(src_norm), i + span * 2)
+            lo, hi = max(0, i - span - 40), min(len(src_norm), i + span + 40)
             seg = src_norm[lo:hi]
-            sm = difflib.SequenceMatcher(None, q_norm, seg, autojunk=False)
-            b = sm.find_longest_match(0, len(q_norm), 0, len(seg))
-            a0 = max(0, b.b - b.a)
-            while a0 > 0 and seg[a0 - 1] != " ":           # start on a word boundary, never mid-word
-                a0 -= 1
-            cand = seg[a0: a0 + span + 10]
-            r = difflib.SequenceMatcher(None, q_norm, cand[:span + 10], autojunk=False).ratio()
+            centre = max(0, (i - lo) - q_norm.find(w))
+            cand, r = _best_span(q_norm, seg, centre)
             if r > ratio:
-                best, ratio = cand[:span + 10].strip().rsplit(" ", 1)[0] if len(cand) > span + 9 and cand[span + 9] != " " else cand[:span + 10].strip(), r
+                best, ratio = cand, r
             start, hits = i + len(w), hits + 1
     return best, ratio
 
