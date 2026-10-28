@@ -1,6 +1,6 @@
 # Checking a report against its sources
 
-A short practical guide for anyone who writes — or receives — reports built from documents. It goes with the open-source tool [quotecheck](../README.md).
+A short practical guide for anyone who writes — or receives — reports built from documents. It goes with the open-source tool [sourcetrace](../README.md).
 *The first draft was written by ARIA's local model and then edited and checked by an engineer; every command and output below was run for real (see `examples/`).*
 
 ## Why reports go wrong
@@ -16,7 +16,7 @@ A clean result means only that the quoted words and stated figures are in the so
 ## A five-step routine
 
 1. **Gather the exact sources** the report claims to use — the same files, not newer copies.
-2. **Run the check:** `quotecheck REPORT -s SOURCE [-s SOURCE ...]`.
+2. **Run the check:** `sourcetrace REPORT -s SOURCE [-s SOURCE ...]`.
 3. **Fix every altered or missing quotation.** Paste the source wording back in, or drop the quotation. A "missing" quotation (no close match anywhere) deserves the most suspicion.
 4. **Decide for each untraced number.** If it is a calculation, show the working next to it; if you cannot say where it came from, remove it.
 5. **Read for meaning.** Every word and figure is now traceable; whether they are used fairly and the conclusion follows is still your judgement.
@@ -26,7 +26,7 @@ A clean result means only that the quoted words and stated figures are in the so
 The files in `examples/` are invented. `policy.txt` says: *"Northwind Logistics Ltd is cleared to handle personal data inside the EEA."* The draft `report.md` says "approved" and "EU" instead, and states a margin that is not in the policy.
 
 ```
-$ quotecheck examples/report.md -s examples/policy.txt
+$ sourcetrace examples/report.md -s examples/policy.txt
 line 3: QUOTE ALTERED: “Northwind Logistics Ltd is approved to handle personal data inside the EU.”
     closest in policy.txt: “northwind logistics ltd is cleared to handle personal data inside the eea.” (similarity 0.93)
 line 5: NUMBER NOT FOUND IN SOURCES: R 3,049,500  (it may be a calculation or invented)
@@ -43,7 +43,7 @@ A scanned PDF with no text layer cannot be read — run OCR first. Tables are re
 ## One-page checklist
 
 - Use the exact source files the report was written from.
-- Run `quotecheck` and read every line it prints.
+- Run `sourcetrace` and read every line it prints.
 - Fix each ALTERED quotation by restoring the source's words.
 - Treat each MISSING quotation as unsupported until you find where it came from.
 - For each untraced number: a calculation (show the working) or unsupported (remove it).

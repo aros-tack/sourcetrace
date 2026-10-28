@@ -1,8 +1,8 @@
 import json, shutil, subprocess, sys, tempfile, unittest, zipfile
 from pathlib import Path
 
-from quotecheck.core import check_report, find_quotes, load_source, normalize, numbers_in
-from quotecheck.cli import main
+from sourcetrace.core import check_report, find_quotes, load_source, normalize, numbers_in
+from sourcetrace.cli import main
 
 SRC = {"policy.txt": ("Vendor review 2026.\nNorthwind Logistics Ltd is cleared to handle personal data inside the EEA.\n"
                       "Revenue for the year was R 4,250,000 and operating costs were R 1,200,500.\nHalvorsen Freight was removed from the approved list in March.\n")}

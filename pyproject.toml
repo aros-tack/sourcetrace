@@ -3,8 +3,8 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "quotecheck"
-version = "0.1.0"
+name = "sourcetrace"
+version = "0.2.0"
 description = "Check that a report's quotations and numbers really come from its sources."
 readme = "README.md"
 license = { text = "MIT" }
@@ -12,7 +12,7 @@ requires-python = ">=3.11"
 classifiers = ["License :: OSI Approved :: MIT License", "Programming Language :: Python :: 3"]
 
 [project.scripts]
-quotecheck = "quotecheck.cli:main"
+sourcetrace = "sourcetrace.cli:main"
 
 [tool.setuptools]
-packages = ["quotecheck"]
+packages = ["sourcetrace"]
